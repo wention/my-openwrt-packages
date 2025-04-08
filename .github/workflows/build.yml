@@ -13,7 +13,7 @@ jobs:
           - x86_64
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -21,9 +21,20 @@ jobs:
         uses: immortalwrt/gh-action-sdk@master
         env:
           ARCH: ${{ matrix.arch }}
+          FEEDNAME: packages_ci
+          V: s
 
       - name: Store packages
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.arch }}-packages
-          path: bin/packages/${{ matrix.arch }}/packages/*.ipk
+          path: |
+            bin/packages/${{ matrix.arch }}/packages_ci/*.ipk
+            bin/packages/${{ matrix.arch }}/packages_ci/*.apk
+
+      - name: Store logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.arch}}-logs
+          path: logs/
