@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0
 
       - name: Build
-        uses: immortalwrt/gh-action-sdk@master
+        uses: immortalwrt/gh-action-sdk@v6
         env:
           ARCH: ${{ matrix.arch }}
           FEEDNAME: packages_ci
